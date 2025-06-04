@@ -1,0 +1,22 @@
+{
+    "list": [
+        {   
+            "itemName": "itemtest",
+            "itemInfo": "测试物品，无效果",
+            "spriteUrl": "Base:test",
+            "tags": "None",
+            "OnPick": "",
+            "OnUse": "",
+            "OnDrop": ""
+        },
+        {
+            "itemName": "eventtest",
+            "itemInfo": "》》》测试物品,捡起时添加事件",
+            "spriteUrl": "",
+            "tags": "None",
+            "OnPick": "Event:ShowInfo()",
+            "OnUse": "Event:Log(》》》测试物品的使用事件测试)",
+            "OnDrop": ""
+        }
+    ]
+}

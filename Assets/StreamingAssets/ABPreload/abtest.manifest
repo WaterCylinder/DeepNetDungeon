@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 3859791426
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: ef7c3e2a82dbd0ddec9bc99fbacb67a2
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9c5c2bf181d9c166e27af67e2a391d17
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: ef7c3e2a82dbd0ddec9bc99fbacb67a2
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/AssetBundle/BundleTest/arrow.png
+Dependencies: []

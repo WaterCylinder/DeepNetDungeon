@@ -1,0 +1,16 @@
+{
+    "name": "Effects",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9c9a4f3256a43cb4291ed3ed86ed4b95"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,8 @@
+<TextFile language="zh-cn">
+<Text name="save_empty">
+    空
+</Text>
+<Text name="save_info">
+    {0}：创建时间 {1}
+</Text>
+</TextFile>

@@ -1,0 +1,40 @@
+ManifestFileVersion: 0
+CRC: 96263012
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 4f1b4c28fe48311e2f2e99e5affeee05
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 00c7a668f57fc60147b115a9ffa7dd2c
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 4f1b4c28fe48311e2f2e99e5affeee05
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 50
+  Script: {instanceID: 0}
+- Class: 58
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5ab41805d02aaf840847d750bf3dcb9c, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 212
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/AssetBundle/Entities/EnemyTest2.prefab
+Dependencies: []

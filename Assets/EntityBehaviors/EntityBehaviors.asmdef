@@ -1,0 +1,17 @@
+{
+    "name": "EntityBehaviors",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9c9a4f3256a43cb4291ed3ed86ed4b95",
+        "GUID:a93bef502f91913439bfa61edce480cf"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 1106495350
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: enemytest2_gameobject
+      Dependencies: {}
