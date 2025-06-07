@@ -131,11 +131,11 @@ public class Game : MonoBehaviour
         Goto(100);
         test = GameManager.instance.EntityCreate("EnemyTest2", new Vector2(2, 2.45f));
         //test.AddEffect("EffectTest");
-        SpriteManager.Init("Base");
-        ItemManager.Init("Base");
+        /*SpriteManager.Init("Base");
+        ItemManager.Init("Base");*/
     }
     public void DebugOn100(){
-        player.bag.AddItem("itemtest");
-        debugRenderer.sprite = player.bag.GetItem("itemtest").GetSprite();
+        /*player.bag.AddItem("itemtest");
+        debugRenderer.sprite = player.bag.GetItem("itemtest").GetSprite();*/
     }
 }

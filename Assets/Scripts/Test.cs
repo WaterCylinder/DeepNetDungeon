@@ -18,7 +18,10 @@ public class Test : MonoBehaviour
     public bool show = false;
     void Start(){
         //HotUpdateTest();
-        SpriteManager.Init("Base");
+        //SpriteManager.Init("Base");
+        RogueMapCreator map = new RogueMapCreator(9, 9, seed:1219915818);
+        map.Init();
+        Debug.Log(map);
     }
     void Update(){/*
         if(ItemManager.dataBase.ContainsKey("Base")){
@@ -30,6 +33,7 @@ public class Test : MonoBehaviour
                 }
             }
         }*/
+        /*
         if(SpriteManager.dataBase["Base"].state == DataBaseState.Ready
             && !ItemManager.dataBase.ContainsKey("Base")
         ){
@@ -41,7 +45,7 @@ public class Test : MonoBehaviour
                 test.GetComponent<SpriteRenderer>().sprite = i.GetSprite();
                 show = true;
             }
-        }
+        }*/
     }
     void HotUpdateTest(){
         // Editor环境下，HotUpdate.dll.bytes已经被自动加载，不需要加载，重复加载反而会出问题。

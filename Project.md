@@ -145,13 +145,17 @@ Global是全局定义的物品事件。
    
    对db操作可以实现检查加载状态，获取数据库内容，重新加载数据库，卸载并释放数据库资源等
    
-## 图像资源
+## 创建和使用图像资源
 
    使用SpriteManager管理图像资源，图像资源默认放在StreamingAssets/Images目录下，和ItemManager一样通过不同dbname进行管理。
 
 其使用和Itemmanager无二，将图像资源放在指定的库名文件夹下，就可以通过指定的库名和资源名称去加载资源
 
 同样也是使用Init方法进行资源的预加载。
+
+实体可以使用AB包preload预加载的图像资源，也可以使用SpriteLoader去加载SpriteManager的资源。
+
+spriteloader的作用是为当前附着的物品添加spriterender组件，并尝试加载并将sprite赋值给组件。
 
 # TODO:
 * 地图生成
