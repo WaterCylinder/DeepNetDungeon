@@ -15,10 +15,6 @@ public class Global : MonoBehaviour
     /// </summary>
     public const float MAINPROCESS_TIMESTEP = 0.01f;
     /// <summary>
-    /// 游戏进程步进时长
-    /// </summary>
-    public const float GAMEPROCESS_TIMESTEP = 0.01f;
-    /// <summary>
     /// 演出帧数
     /// </summary>
     public const float VIEW_FPS = 30;

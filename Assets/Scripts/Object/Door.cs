@@ -21,7 +21,7 @@ public class Door : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other){
         if(other.GetComponent<Player>() != null && canTrans && !isClose && targetRoomIndex != -1){
-            Game.instance.Trans(room.links[targetRoomIndex], targetDoorIndex);
+            GameBase.now.Trans(room.links[targetRoomIndex], targetDoorIndex);
         }
     }
     void OnTriggerExit2D(Collider2D other){

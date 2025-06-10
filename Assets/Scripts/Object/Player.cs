@@ -7,7 +7,7 @@ public class Player : Entity
     public Vector2 attackToward;
     public Bag bag;
     protected override void EntityAwake(){
-        Game.instance.player = this;
+        GameBase.now.player = this;
         entityTags.Add(EntityTag.Player);
         bag = GetComponent<Bag>();
     }

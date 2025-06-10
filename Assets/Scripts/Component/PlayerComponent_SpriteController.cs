@@ -11,7 +11,7 @@ public class PlayerComponent_SpriteController : MonoBehaviour
     public Transform arrow;
     void Start(){
         if(!player){
-            player = Game.instance.player;
+            player = GameBase.now.player;
         }
     }
     void Update(){

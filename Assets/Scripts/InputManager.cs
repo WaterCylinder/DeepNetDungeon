@@ -39,7 +39,7 @@ public class InputManager
             }
             //低优先级：鼠标右键移动
             if(Input.GetMouseButton(1)){
-                Player player = Game.instance != null ? Game.instance.player : null;
+                Player player = GameBase.now != null ? GameBase.now.player : null;
                 if(player != null){
                     Vector2 playerPosition = player.transform.position;
                     Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -58,7 +58,7 @@ public class InputManager
         if(Global.Controller == "mouse_keyboard"){
             //鼠标左键攻击
             if(Input.GetMouseButton(0)){
-                Player player = Game.instance != null ? Game.instance.player : null;
+                Player player = GameBase.now != null ? GameBase.now.player : null;
                 if(player != null){
                     Vector2 playerPosition = player.transform.position;
                     Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
