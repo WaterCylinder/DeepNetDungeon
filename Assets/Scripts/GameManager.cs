@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     }
     public static Coroutine mainProcess;
     public SkipList<Entity> entityPool = new SkipList<Entity>();
-    public Game game;
+    public GameBase game;
     public int opera = 0;
     /// <summary>
     /// 初始化游戏

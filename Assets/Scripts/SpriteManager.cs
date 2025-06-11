@@ -75,14 +75,13 @@ public class SpriteManager : DataBase<SpriteAsset>
         if(!Directory.Exists(_path)){
             Directory.CreateDirectory(_path);
             Debug.LogWarning($"{name}目录不存在，已创建。{_path}");
+            return;
         }
         //只加载png格式的文件
         string[] loadList = Directory.GetFiles(_path).Where(x=>x.EndsWith(".png")).ToArray();
-        Debug.Log($"待加载的Sprite列表：{Tool.GetInfo(loadList)}");
-        state = DataBaseState.Loading;
-        loader = StartCoroutine(LoadAsync(loadList));
+        LoadAsyncByList(loadList);
     }
-    IEnumerator LoadAsync(string[] files){
+    protected override IEnumerator LoadAsync(string[] files){
         foreach(string file in files){
             Debug.Log($"加载Sprite, on:{file}");
             SpriteAsset asset;

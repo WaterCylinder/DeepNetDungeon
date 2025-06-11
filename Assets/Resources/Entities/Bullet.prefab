@@ -165,10 +165,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775ab65fd64067b4ca9efe44a0951b03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
   args: []
   speed: 1
   toward: {x: 0, y: 0}
+  hp: 0
   maxHp:
     _baseValue: 100
     _affectList: []
@@ -226,9 +226,11 @@ MonoBehaviour:
   TriggerExitEvent:
     m_PersistentCalls:
       m_Calls: []
+  canAttack: 1
   damage:
-    value: 0
+    _value: 0
     crit: 0
     critRatio: 0
     source: {fileID: 0}
   source: {fileID: 0}
+  life: 5

@@ -39,7 +39,7 @@ public class GameTest : GameBase
                 Debug.Log("W1: 开始初始动画");
                 //插入动画
                 //使用演出进程创建初始演出进程
-                view.StartProcess("Start");
+                //view.StartProcess("Start");
                 Next();
                 break;
             case 20:
@@ -58,6 +58,10 @@ public class GameTest : GameBase
             case 110:
                 Debug.Log("W11: 游戏中");
                 break;
+
+            case -100:
+                Debug.Log("W-100: 加载中");
+                break;
         }
     }
     /// <summary>
@@ -74,7 +78,7 @@ public class GameTest : GameBase
     }
     
     public void DebugOnStart(){
-        Goto(100);
+        //Goto(100);
         test = GameManager.instance.EntityCreate("EnemyTest2", new Vector2(2, 2.45f));
         //test.AddEffect("EffectTest");
         /*SpriteManager.Init("Base");

@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public abstract class Game : MonoBehaviour
@@ -10,13 +10,30 @@ public abstract class Game : MonoBehaviour
     /// 游戏流程变量
     /// </summary>u
     public int W;
+    protected int WTemp;
     public Coroutine gameProcess;
+    public Coroutine assetProcess;
     public DataBaseState assetState;
+
+    protected abstract void WController();
+    protected abstract void AssetLoaderCheck();
+
 
     void Awake(){
         now = this;
         W = -1;
         gameProcess = StartCoroutine(Process());
+        LoadAsset();
+        assetState = DataBaseState.Init;
+    }
+
+    protected virtual void LoadAsset(){
+        assetProcess = StartCoroutine(AssetLoader());
+    }
+
+    protected virtual void EndLoadAsset(){
+        if(assetProcess != null)StopCoroutine(assetProcess);
+        assetState = DataBaseState.Ready;
     }
 
     IEnumerator Process(){
@@ -25,8 +42,13 @@ public abstract class Game : MonoBehaviour
             yield return new WaitForSeconds(GAMEPROCESS_TIMESTEP);
         }
     }
-
-    protected abstract void WController();
+    IEnumerator AssetLoader(){
+        while(assetState != DataBaseState.Ready){
+            assetState = DataBaseState.Loading;
+            AssetLoaderCheck();
+            yield return new WaitForSeconds(GAMEPROCESS_TIMESTEP);
+        }
+    }
     
     public void Next(){
         W+=10;
@@ -36,5 +58,12 @@ public abstract class Game : MonoBehaviour
     }
     public void Goto(int target){
         W = target;
+    }
+    public void GotoTemp(int target){
+        WTemp = W;
+        W = target;
+    }
+    public void GotoTemp(){
+        W = WTemp;
     }
 }

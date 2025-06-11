@@ -9,10 +9,10 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-        /*string apppath = Application.dataPath.Substring(0, Application.dataPath.Length - 6);
-        Assembly hotUpdate = Assembly.LoadFrom(apppath + "HotUpdate/HotUpdate.dll");
-        Type hello = hotUpdate.GetType("HybirdHello");
-        hello.GetMethod("Run").Invoke(null, null);*/
+    /*string apppath = Application.dataPath.Substring(0, Application.dataPath.Length - 6);
+    Assembly hotUpdate = Assembly.LoadFrom(apppath + "HotUpdate/HotUpdate.dll");
+    Type hello = hotUpdate.GetType("HybirdHello");
+    hello.GetMethod("Run").Invoke(null, null);*/
     public TextMeshProUGUI text;
     public GameObject test;
     public bool show = false;

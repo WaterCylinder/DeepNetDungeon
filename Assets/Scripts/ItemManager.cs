@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEditorInternal;
 using UnityEngine;
@@ -120,19 +121,16 @@ public class ItemManager : DataBase<Item>
             Directory.CreateDirectory(_path);
             Debug.LogWarning($"{name}目录不存在，已创建。{_path}");
         }
-        Debug.Log($"正在加载Item信息：{path}");
-        state = DataBaseState.Loading;
-        loader = StartCoroutine(LoadAsync());
+        string[] loadList = Directory.GetFiles(_path).Where(x=>x.EndsWith(".json")).ToArray();
+        LoadAsyncByList(loadList);
     }
-    IEnumerator LoadAsync(){
-        foreach(string file in Directory.GetFiles(_path)){
-            if(file.EndsWith(".json")){
-                ItemJsonList dto = JsonTool.Load<ItemJsonList>(file);
-                foreach(ItemDTO item in dto.list){
-                    AddItem(item);
-                }
-                yield return null;
+    protected override IEnumerator LoadAsync(string[] files){
+        foreach(string file in files){
+            ItemJsonList dto = JsonTool.Load<ItemJsonList>(file);
+            foreach(ItemDTO item in dto.list){
+                AddItem(item);
             }
+            yield return null;
         }
         //加载完毕
         list.Sort((a, b)=>{

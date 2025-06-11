@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class Global : MonoBehaviour
 {   
-    # region ConstField
+    # region 常量
     /// <summary>
     /// 主进程步进时长
     /// </summary>
@@ -45,7 +45,7 @@ public class Global : MonoBehaviour
 
     # endregion
 
-    # region SettingField
+    # region 设置变量
     /// <summary>
     /// 文本语言
     /// </summary>
@@ -61,7 +61,7 @@ public class Global : MonoBehaviour
 
     # endregion
 
-    # region HybirdCRT Assembly
+    # region HybirdCRT程序集
 
     //HybirdCRT热更新程序集
     private static Assembly _hotUpdate = null;
