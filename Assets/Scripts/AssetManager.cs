@@ -51,6 +51,7 @@ public class AssetManager : MonoBehaviour
     /// <returns></returns>
     public static Container<AssetBundleRequest> PreloadGameAsset(string path, UnityAction<AssetBundleRequest> complate = null){
         path = Tool.ToPath(path);
+        Debug.Log($"AssetManager读取路径{path}");
         if(!Directory.Exists(path)){
             Debug.LogWarning("预加载资源失败，路径不存在：" + path);
             return Container<AssetBundleRequest>.Done;

@@ -34,6 +34,7 @@ public class GameTest : GameBase
                 Debug.Log("W0: 游戏开始");
                 //初始化游戏
                 Next();
+                Goto(100);//暂时不考虑动画
                 break;
             case 10:
                 Debug.Log("W1: 开始初始动画");
@@ -51,12 +52,14 @@ public class GameTest : GameBase
                 Goto(100);
                 break;
             case 100:
-                Debug.Log("W10: 进入游戏");
+                Debug.Log("W10: 进入游戏前");
                 DebugOn100();
+                OnGameSatrt();
                 Next();
                 break;
             case 110:
                 Debug.Log("W11: 游戏中");
+                OnGame();
                 break;
 
             case -100:
@@ -79,7 +82,7 @@ public class GameTest : GameBase
     
     public void DebugOnStart(){
         //Goto(100);
-        test = GameManager.instance.EntityCreate("EnemyTest2", new Vector2(2, 2.45f));
+        //test = GameManager.instance.EntityCreate("EnemyTest2", new Vector2(2, 2.45f));
         //test.AddEffect("EffectTest");
         /*SpriteManager.Init("Base");
         ItemManager.Init("Base");*/
@@ -87,5 +90,11 @@ public class GameTest : GameBase
     public void DebugOn100(){
         /*player.bag.AddItem("itemtest");
         debugRenderer.sprite = player.bag.GetItem("itemtest").GetSprite();*/
+    }
+    public void OnGameSatrt(){
+
+    }
+    public void OnGame(){
+
     }
 }

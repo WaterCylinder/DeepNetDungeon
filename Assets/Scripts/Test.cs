@@ -19,9 +19,9 @@ public class Test : MonoBehaviour
     void Start(){
         //HotUpdateTest();
         //SpriteManager.Init("Base");
-        RogueMapCreator map = new RogueMapCreator(9, 9, seed:1219915818);
+        /*RogueMapCreator map = new RogueMapCreator(9, 9, seed:1219915818);
         map.Init();
-        Debug.Log(map);
+        Debug.Log(map);*/
     }
     void Update(){/*
         if(ItemManager.dataBase.ContainsKey("Base")){

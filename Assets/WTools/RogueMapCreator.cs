@@ -56,6 +56,7 @@ public enum MapType{
     Full = 4,
 }
 
+[Serializable]
 // 自定义向量结构体
 public class RogueMapCreator
 {   
@@ -68,6 +69,7 @@ public class RogueMapCreator
     public int width, height;
     public float size, dispersion;
     public Random rand;
+    public int seed;
     public Point start, boss;
     public (int lw, int rw, int uh, int dh) bounds;
     /// <summary>
@@ -89,7 +91,12 @@ public class RogueMapCreator
         this.dispersion = dispersion;
         map = new MapFlag[width, height];
         prob = new float[width, height];
+        SetSeed(seed);
+    }
+    public int SetSeed(int seed){
+        this.seed = seed;
         rand = new Random(seed);
+        return seed;
     }
     public bool RandCheck(float p){
         if(p <= 0)return false;
@@ -213,6 +220,7 @@ public class RogueMapCreator
 
     public override string ToString(){
         StringBuilder sb = new StringBuilder();
+        sb.AppendLine($"Map:Seed{seed}");
         // 添加列号标识
         sb.Append("   ");
         for (int x = 0; x < width; x++){

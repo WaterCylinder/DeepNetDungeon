@@ -71,12 +71,14 @@ public class GameManager : MonoBehaviour
     }
 
     public void EntityAdd(Entity entity){
-        entityPool.Add(entity, false);
+        entityPool.Add(entity, true, false);
     }
 
     public Entity EntityCreate(string name, Vector2 postion){
         GameObject obj = AssetManager.LoadEntity(name);
-        return Instantiate(obj, postion, Quaternion.identity).GetComponent<Entity>();
+        Entity ent = Instantiate(obj, postion, Quaternion.identity).GetComponent<Entity>();
+        EntityAdd(ent);
+        return ent;
     }
 
     public void EntityDestroy(Entity entity){
