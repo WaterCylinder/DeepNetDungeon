@@ -34,7 +34,7 @@ public class MapDebuger : MonoBehaviour
                         break;
                     }
                     if(obj == null)break;
-                    obj.transform.parent = layout;
+                    obj.transform.SetParent(layout.transform);
                     obj.transform.localPosition = new Vector3(-j * roomSize, i * roomSize, 0);
                 }
             }

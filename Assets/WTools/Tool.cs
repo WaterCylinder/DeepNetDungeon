@@ -127,4 +127,26 @@ public class Tool
             return null;
         }
     }
+    /// <summary>
+    /// 随机权重抽取
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="rand"></param>
+    /// <returns></returns>
+    public static T WeightRandomPick<T>(List<WeightData<T>> list, System.Random rand = null){
+        int W = 0;
+        list.ForEach(x => W += x.weight);
+        int r = rand == null ? RandomRange(0, W) : rand.Next(0, W);
+        foreach(var x in list){
+            W -= x.weight;
+            if(r > W){
+                return x.data;
+            }
+        }
+        return default;
+    }
+    public static T WeightRandomPick<T>(WeightData<T>[] list, System.Random rand = null){
+        return WeightRandomPick(new List<WeightData<T>>(list), rand);
+    }
 }

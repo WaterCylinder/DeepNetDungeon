@@ -7,30 +7,31 @@ public enum MapFlag{
     /// 空地
     /// </summary>
     Empty = 0,
-    /// <summary>
-    /// 临时标记
-    /// </summary>
-    Temp = 1,
+    
     /// <summary>
     /// 普通房间
     /// </summary>
-    Normal = 2,
+    Normal = 1,
     /// <summary>
     /// 终点房间（单连通）
     /// </summary>
-    End = 3,
+    End = 2,
     /// <summary>
     /// 特殊房间
     /// </summary>
-    Special = 4,
+    Special = 3,
     /// <summary>
     /// BOSS房间（或者通往下一层的房间）
     /// </summary>
-    Boss = 5,
+    Boss = 4,
     /// <summary>
     /// 起始房间
     /// </summary>
-    Start = 6,
+    Start = 5,
+    /// <summary>
+    /// 临时标记
+    /// </summary>
+    Temp = 6
 }
 
 public enum MapType{
