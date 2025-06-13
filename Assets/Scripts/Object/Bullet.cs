@@ -41,7 +41,7 @@ public class Bullet : Entity
     public static GameObject bulletPrefab{
         get{
             if(_bulletPrefab == null){
-                _bulletPrefab = AssetManager.LoadEntity("Bullet");
+                _bulletPrefab = AssetManager.LoadEntity("Bullet", false);
             }
             return _bulletPrefab;
         } 

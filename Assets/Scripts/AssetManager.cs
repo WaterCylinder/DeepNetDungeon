@@ -32,9 +32,9 @@ public class AssetManager : MonoBehaviour
     /// <returns></returns>
     public static T Load<T>(string name)where T : UnityEngine.Object{
         name = Tool.ToPath(name);
+        T res = Resources.Load<T>(name);
         string path = Path.GetDirectoryName(name);
         name = Path.GetFileNameWithoutExtension(name);
-        T res = Resources.Load<T>(name);
         if(res == null){
             res = AssetBundleLoader.Load<T>(path, name);
         }
@@ -42,6 +42,9 @@ public class AssetManager : MonoBehaviour
     }
     public static T Load<T>(string path, string name)where T : UnityEngine.Object{
         return Load<T>(Path.Combine(path, name));
+    }
+    public static T LoadFromAB<T>(AssetBundle ab, string name)where T : UnityEngine.Object{
+        return AssetBundleLoader.LoadFromAB<T>(ab, name);
     }
     /// <summary>
     /// 加载实体，依赖于Unity的AB包功能，自动缓存已经记载过的AB包。传入资源路径名和资源名。
@@ -65,11 +68,7 @@ public class AssetManager : MonoBehaviour
     /// <returns></returns>
     public static Container<AssetBundle> PreloadGameAsset(string path, UnityAction<AssetBundle> complate = null){
         path = Tool.ToPath(path);
-        Debug.Log($"AssetManager读取路径{path}");
-        if(!Directory.Exists(path)){
-            Debug.LogWarning("预加载资源失败，路径不存在：" + path);
-            return Container<AssetBundle>.Done;
-        }
+        Debug.Log($"AssetManager读取路径%StreamAsset%:{path}");
         try{
             return AssetBundleLoader.LoadAllAsync(path, ab=>{complate?.Invoke(ab);});
         }catch(Exception e){

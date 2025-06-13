@@ -108,7 +108,7 @@ public class RogueMapCreator
         start = new Point(width / 2, height / 2);
         MapSet(start, MapFlag.Start);
         bounds.lw = start.y;
-        bounds.rw = width - 1 -start.y;
+        bounds.rw = width - 1 - start.y;
         bounds.uh = start.x;
         bounds.dh = height - 1 - start.x;
         Generate();
@@ -117,14 +117,17 @@ public class RogueMapCreator
     }
     //检查位置是否超出边界
     bool Limit(Point p){
-        if(p.x < 0 || p.y < 0 || p.x >= width || p.y >= height)
+        if(p.x < 0 || p.y < 0 || p.x >= height || p.y >= width)
             return false;
         return true;
     }
+    public bool Limit(int x, int y){
+        return Limit(new Point(x, y));
+    }
     //遍历map
     void MapGridBy(Action<Point> action){
-        for(int x = 0; x < width; x++){
-            for(int y = 0; y < height; y++){
+        for(int x = 0; x < height; x++){
+            for(int y = 0; y < width; y++){
                 action(new Point(x, y));
             }
         }
@@ -224,37 +227,32 @@ public class RogueMapCreator
         sb.AppendLine($"Map:Seed{seed}");
         // 添加列号标识
         sb.Append("   ");
-        for (int x = 0; x < width; x++){
-            sb.AppendFormat("{0,2}", x);
+        for (int y = 0; y < width; y++){
+            sb.AppendFormat("{0,2}", y);
         }
         sb.AppendLine();
-        for (int y = 0; y < height; y++){
+        for (int x = 0; x < height; x++){
             // 添加行号标识
-            sb.AppendFormat("{0,2}|", y);
+            sb.AppendFormat("{0,2}|", x);
             
-            for (int x = 0; x < width; x++){
+            for (int y = 0; y < width; y++){
                 // 将枚举值转换为数字表示
                 sb.AppendFormat("{0,2}", (int)map[x, y]);
             }
             sb.AppendLine();
         }
-        // 2. 添加类型说明
-        sb.AppendLine("\nMapFlag 说明:");
-        sb.AppendLine("0:Empty  1:Temp  2:Normal");
-        sb.AppendLine("3:End    4:Special");
-        sb.AppendLine("5:Boss   6:Start");
 
         // 3. 输出概率矩阵
         sb.AppendLine("\n概率矩阵 prob[,]:");
         sb.Append("   ");
-        for (int x = 0; x < width; x++) {
-            sb.AppendFormat("{0,10}", x); // 列号
+        for (int y = 0; y < width; y++) {
+            sb.AppendFormat("{0,10}", y); // 列号
         }
         sb.AppendLine();
         
-        for (int y = 0; y < height; y++) {
-            sb.AppendFormat("{0,2}|", y); // 行号
-            for (int x = 0; x < width; x++) {
+        for (int x = 0; x < height; x++) {
+            sb.AppendFormat("{0,2}|", x); // 行号
+            for (int y = 0; y < width; y++) {
                 sb.AppendFormat("{0,8:F4}", prob[x, y]); // 保留4位小数
             }
             sb.AppendLine();
@@ -263,11 +261,11 @@ public class RogueMapCreator
         // 4. 新增距离矩阵输出
         sb.AppendLine("\n距离矩阵 distance:");
         sb.Append("   ");
-        for (int x = 0; x < width; x++) sb.AppendFormat("{0,5}", x); // 缩窄列宽
+        for (int y = 0; y < width; y++) sb.AppendFormat("{0,5}", y); // 缩窄列宽
         sb.AppendLine();
-        for (int y = 0; y < height; y++) {
-            sb.AppendFormat("{0,2}|", y);
-            for (int x = 0; x < width; x++) {
+        for (int x = 0; x < height; x++) {
+            sb.AppendFormat("{0,2}|", x);
+            for (int y = 0; y < width; y++) {
                 Point p = new Point(x, y);
                 // 显示"-1"表示不可达，其他显示实际距离
                 int dist = distance.ContainsKey(p) ? distance[p] : -1;

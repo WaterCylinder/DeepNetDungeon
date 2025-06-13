@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
             return _instance;
         }
     }
+    public static GameManager ins => instance;
     /// <summary>
     /// 切换暂停游戏
     /// </summary>
@@ -42,7 +43,7 @@ public class GameManager : MonoBehaviour
     }
     public static Coroutine mainProcess;
     public SkipList<Entity> entityPool = new SkipList<Entity>();
-    public GameBase game;
+    public GameBase game => (GameBase)Game.now;
     public int opera = 0;
     /// <summary>
     /// 初始化游戏

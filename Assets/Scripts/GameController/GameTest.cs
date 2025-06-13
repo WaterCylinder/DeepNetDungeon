@@ -33,32 +33,38 @@ public class GameTest : GameBase
             case 0:
                 Debug.Log("W0: 游戏开始");
                 //初始化游戏
+                //生成地图
+                Debug.Log(roomABContainer);
+                GenerateMap();
+                map.MapInit(10, 10);
+                map.MapCreratorInit();
+                map.Generate();
                 Next();
                 Goto(100);//暂时不考虑动画
                 break;
             case 10:
-                Debug.Log("W1: 开始初始动画");
+                Debug.Log("W10: 开始初始动画");
                 //插入动画
                 //使用演出进程创建初始演出进程
                 //view.StartProcess("Start");
                 Next();
                 break;
             case 20:
-                Debug.Log("W2: 播放初始动画中");
+                Debug.Log("W20: 播放初始动画中");
                 Next();
                 break;
             case 30:
-                Debug.Log("W3: 播放初始动画结束");
+                Debug.Log("W30: 播放初始动画结束");
                 Goto(100);
                 break;
             case 100:
-                Debug.Log("W10: 进入游戏前");
+                Debug.Log("W100: 进入游戏前");
                 DebugOn100();
                 OnGameSatrt();
                 Next();
                 break;
             case 110:
-                Debug.Log("W11: 游戏中");
+                Debug.Log("W110: 游戏中");
                 OnGame();
                 break;
 

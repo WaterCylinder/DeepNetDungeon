@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq.Expressions;
 using System.Xml;
 using UnityEngine;
 
@@ -62,6 +63,10 @@ public class AssetBundleLoader
     /// <param name="path"></param>
     /// <param name="complate"></param>
     public static Container<AssetBundle> LoadAllAsync(string path, Action<AssetBundle> complate = null){
+        path = Path.Combine(assetPath, path);
+        if(!File.Exists(path)){
+            throw new Exception("AB包不存在：" + path);
+        }
         AssetBundleCreateRequest abq = LoadAsync(Path.Combine(assetPath, path));
         Container<AssetBundle> container = new Container<AssetBundle>();
         abq.completed += ao => {
@@ -81,7 +86,12 @@ public class AssetBundleLoader
     /// <param name="name"></param>
     /// <returns></returns>
     public static T LoadFromAB<T>(AssetBundle ab, string name) where T : UnityEngine.Object{
-        return ab.LoadAsset<T>(name);
+        try{
+            return ab.LoadAsset<T>(name);
+        }catch(Exception e){
+            Debug.LogError(e.ToString());
+            return null;
+        }
     }
     /// <summary>
     /// 加载Prefab

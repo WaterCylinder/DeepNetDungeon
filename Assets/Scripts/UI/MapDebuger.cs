@@ -14,9 +14,10 @@ public class MapDebuger : MonoBehaviour
     public float roomSize = 32;
     public bool isDisplay = false;
     void Update(){
-        if(map.state == MapState.MapCreatorDone && !isDisplay){
-            for(int i = 0; i < map.width; i++){
-                for(int j = 0; j < map.height; j++){
+        map = GameManager.ins.game.map;
+        if(map != null && map.state.Check(MapState.MapCreatorDone) && !isDisplay){
+            for(int i = 0; i < map.height; i++){
+                for(int j = 0; j < map.width; j++){
                     if(map.map[i, j] == MapFlag.Empty)continue;
                     GameObject obj = null;
                     switch(map.map[i, j]){
@@ -35,10 +36,10 @@ public class MapDebuger : MonoBehaviour
                     }
                     if(obj == null)break;
                     obj.transform.SetParent(layout.transform);
-                    obj.transform.localPosition = new Vector3(-j * roomSize, i * roomSize, 0);
+                    obj.transform.localPosition = new Vector3(j * roomSize, -i * roomSize, 0);
                 }
             }
-            layout.localPosition = new Vector3(map.width * roomSize / 2, -map.height * roomSize / 2, 0);
+            layout.localPosition = new Vector3(-map.width * roomSize / 2, map.height * roomSize / 2, 0);
             Destroy(start);
             Destroy(boss);
             Destroy(end);

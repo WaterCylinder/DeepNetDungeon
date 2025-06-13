@@ -1,0 +1,47 @@
+ManifestFileVersion: 0
+CRC: 1053893838
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 37357015d8e5927cd77b1f79578df8b9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5c0ffd106fa85fe4d55ce28c0ca7354b
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 37357015d8e5927cd77b1f79578df8b9
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 58
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 78a8a68365fab2440b4aa6f285a930ee, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c7d2a123d64fcf14496a2db3e826e6e8, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 212
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Script
+  ClassName: RoomTag
+Assets:
+- Assets/AssetBundle/Rooms/Game/Test/TestNormalRoom1.prefab
+- Assets/AssetBundle/Rooms/Game/Test/TestStartRoom.prefab
+- Assets/AssetBundle/Rooms/Game/Test/TestEndRoom.prefab
+- Assets/AssetBundle/Rooms/Game/Test/TestNormalRoom3.prefab
+- Assets/AssetBundle/Rooms/Game/Test/TestBOSSRoom.prefab
+- Assets/AssetBundle/Rooms/Game/Test/TestNormalRoom2.prefab
+Dependencies: []

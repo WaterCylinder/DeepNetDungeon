@@ -11,6 +11,7 @@ public abstract class GameBase : Game
         }
     }
     public Player player;
+    public Map map;
     public Room room;
     public ItemManager itemManager;
     public SpriteManager spriteManager;
@@ -19,7 +20,7 @@ public abstract class GameBase : Game
     public Container<AssetBundle> roomABContainer;
     protected virtual void OnStart(){}
     void Start(){
-        GameManager.instance.game = this;
+        Game.now = this;
         GameStart();
         LoadAsset();
         OnStart();
@@ -54,19 +55,19 @@ public abstract class GameBase : Game
             }
             if(assetABContainer == null){
                 Debug.Log("开始加载其他资源");
-                assetABContainer = AssetManager.PreloadGameAsset($"Game/{gameName}");
+                assetABContainer = AssetManager.PreloadGameAsset($"Game/{gameName.ToLower()}");
                 return;
             }
             if(itemManager.ready && assetABContainer.done){
                 if(entityABContainer == null){
                     Debug.Log("其他资源与Item信息加载完毕");
                     Debug.Log("开始加载Entity资源");
-                    entityABContainer = AssetManager.PreloadEntity($"GameAssets/{gameName}");
+                    entityABContainer = AssetManager.PreloadEntity($"GameAssets/{gameName.ToLower()}");
                     return;
                 }
                 if(roomABContainer == null){
                     Debug.Log("开始加载Room资源");
-                    roomABContainer = AssetManager.PreloadRoom($"{gameName}");
+                    roomABContainer = AssetManager.PreloadRoom($"{gameName.ToLower()}");
                     return;
                 }
                 if(entityABContainer.done && roomABContainer.done){
@@ -77,12 +78,16 @@ public abstract class GameBase : Game
         }
     }
     public T GetAsset<T>(AssetBundle ab, string name)where T : UnityEngine.Object{ 
-        return AssetBundleLoader.LoadFromAB<T>(ab, name);
+        return AssetManager.LoadFromAB<T>(ab, name);
     }
     public GameObject GetEntity(string name) => GetAsset<GameObject>(entityABContainer.Get(), name);
     public GameObject GetRoom(string name) => GetAsset<GameObject>(roomABContainer.Get(), name);
     public GameObject GetAsset(string name) => GetAsset<GameObject>(assetABContainer.Get(), name);
 
+    protected void GenerateMap(){
+        GameObject obj = Instantiate(Map.mapPrefab, transform.position, Quaternion.identity);
+        map = obj.GetComponent<Map>();
+    }
     protected override void LoadAsset(){
         GotoTemp(-100);
         base.LoadAsset();

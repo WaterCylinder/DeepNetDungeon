@@ -4,19 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public enum RoomType{
-    Normal,
-    Start,
-    End,
-    Boss,
-} 
 public class RoomTag : Tag{
     public static uint None = 0;
 }
 
 public class Room : MonoBehaviour
 {   
-    public RoomType roomType = RoomType.Normal;
+    public MapFlag roomType = MapFlag.Normal;
     public uint roomId = 0;
     public RoomTag tags = new RoomTag();
     public Vector2 defaultPos;

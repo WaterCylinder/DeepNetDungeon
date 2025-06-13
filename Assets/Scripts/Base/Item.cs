@@ -1,7 +1,5 @@
 using System;
-using GluonGui.WorkspaceWindow.Views.WorkspaceExplorer;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class ItemTag : Tag{
     public static uint None = 0;

@@ -134,13 +134,15 @@ public class Tool
     /// <param name="list"></param>
     /// <param name="rand"></param>
     /// <returns></returns>
-    public static T WeightRandomPick<T>(List<WeightData<T>> list, System.Random rand = null){
-        int W = 0;
+    public static T WeightRandomPick<T>(List<WeightData<T>> list, System.Random rand = null, Action<WeightData<T>> onPick = null){
+        float W = 0;
         list.ForEach(x => W += x.weight);
-        int r = rand == null ? RandomRange(0, W) : rand.Next(0, W);
-        foreach(var x in list){
+        float r = rand == null ? RandomRange(0, W) : (float)rand.NextDouble() * W;
+        for(int i = 0; i < list.Count; i++){
+            WeightData<T> x = list[i];
             W -= x.weight;
             if(r > W){
+                onPick?.Invoke(x);
                 return x.data;
             }
         }
