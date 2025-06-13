@@ -61,18 +61,27 @@ public class AssetBundleLoader
     /// </summary>
     /// <param name="path"></param>
     /// <param name="complate"></param>
-    public static Container<AssetBundleRequest> LoadAllAsync(string path, Action<AssetBundleRequest> complate = null){
+    public static Container<AssetBundle> LoadAllAsync(string path, Action<AssetBundle> complate = null){
         AssetBundleCreateRequest abq = LoadAsync(Path.Combine(assetPath, path));
-        Container<AssetBundleRequest> container = new Container<AssetBundleRequest>();
+        Container<AssetBundle> container = new Container<AssetBundle>();
         abq.completed += ao => {
             AssetBundleRequest req = abq.assetBundle.LoadAllAssetsAsync();
             req.completed += ao => {
-                container.Set(req);
-                complate?.Invoke(req);
+                container.Set(abq.assetBundle);
+                complate?.Invoke(abq.assetBundle);
             };
-            container.Set(req);
         };
         return container;
+    }
+    /// <summary>
+    /// 从加载好的AB包中加载指定资源
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="ab"></param>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public static T LoadFromAB<T>(AssetBundle ab, string name) where T : UnityEngine.Object{
+        return ab.LoadAsset<T>(name);
     }
     /// <summary>
     /// 加载Prefab

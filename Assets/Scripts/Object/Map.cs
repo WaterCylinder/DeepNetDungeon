@@ -36,9 +36,8 @@ public class Map : MonoBehaviour
     public float size, dispersion;
     public int seed;
     public List<MapRoomList> roomlist;
-    public MapRoomList FindRoomList(RoomType type){
-        return roomlist.First(x=>x.type == type);
-    }
+    // 获取特定type的房间列表
+    public MapRoomList FindRoomList(RoomType type) => roomlist.First(x=>x.type == type);
     public List<Room> rooms;
     void Awake(){
         state = MapState.Init;
@@ -56,4 +55,5 @@ public class Map : MonoBehaviour
         Debug.Log(mapCreator);
         state = MapState.MapCreatorDone;
     }
+    
 }

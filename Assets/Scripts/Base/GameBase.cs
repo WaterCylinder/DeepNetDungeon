@@ -14,8 +14,9 @@ public abstract class GameBase : Game
     public Room room;
     public ItemManager itemManager;
     public SpriteManager spriteManager;
-    public Container<AssetBundleRequest> entityRequestContainer;
-    public Container<AssetBundleRequest> assetRequestContainer;
+    public Container<AssetBundle> entityABContainer;
+    public Container<AssetBundle> assetABContainer;
+    public Container<AssetBundle> roomABContainer;
     protected virtual void OnStart(){}
     void Start(){
         GameManager.instance.game = this;
@@ -36,8 +37,9 @@ public abstract class GameBase : Game
     //加载资源
     protected override void AssetLoaderCheck(){
         if(spriteManager == null){
-            entityRequestContainer = null;
-            assetRequestContainer = null;
+            entityABContainer = null;
+            assetABContainer = null;
+            roomABContainer = null;
             Debug.Log("开始加载sprite资源");
             SpriteManager.Init(gameName);
             spriteManager = SpriteManager.dataBase[gameName];
@@ -50,25 +52,37 @@ public abstract class GameBase : Game
                 itemManager = ItemManager.dataBase[gameName];
                 return;
             }
-            if(assetRequestContainer == null){
+            if(assetABContainer == null){
                 Debug.Log("开始加载其他资源");
-                assetRequestContainer = AssetManager.PreloadGameAsset($"Game/{gameName}");
+                assetABContainer = AssetManager.PreloadGameAsset($"Game/{gameName}");
                 return;
             }
-            if(itemManager.ready && assetRequestContainer.done){
-                if(entityRequestContainer == null){
+            if(itemManager.ready && assetABContainer.done){
+                if(entityABContainer == null){
                     Debug.Log("其他资源与Item信息加载完毕");
                     Debug.Log("开始加载Entity资源");
-                    entityRequestContainer = AssetManager.PreloadEntity($"GameAssets/{gameName}");
+                    entityABContainer = AssetManager.PreloadEntity($"GameAssets/{gameName}");
                     return;
                 }
-                if(entityRequestContainer.done){
+                if(roomABContainer == null){
+                    Debug.Log("开始加载Room资源");
+                    roomABContainer = AssetManager.PreloadRoom($"{gameName}");
+                    return;
+                }
+                if(entityABContainer.done && roomABContainer.done){
                     Debug.Log("Game资源加载完毕");
                     EndLoadAsset();
                 }
             }
         }
     }
+    public T GetAsset<T>(AssetBundle ab, string name)where T : UnityEngine.Object{ 
+        return AssetBundleLoader.LoadFromAB<T>(ab, name);
+    }
+    public GameObject GetEntity(string name) => GetAsset<GameObject>(entityABContainer.Get(), name);
+    public GameObject GetRoom(string name) => GetAsset<GameObject>(roomABContainer.Get(), name);
+    public GameObject GetAsset(string name) => GetAsset<GameObject>(assetABContainer.Get(), name);
+
     protected override void LoadAsset(){
         GotoTemp(-100);
         base.LoadAsset();

@@ -1220,6 +1220,8 @@ MonoBehaviour:
   size: 0
   dispersion: 0
   seed: -1
+  roomlist: []
+  rooms: []
 --- !u!1 &1218950959
 GameObject:
   m_ObjectHideFlags: 0

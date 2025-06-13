@@ -25,6 +25,25 @@ public class AssetManager : MonoBehaviour
         }
     }
     /// <summary>
+    /// 加载指定路径的资源
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public static T Load<T>(string name)where T : UnityEngine.Object{
+        name = Tool.ToPath(name);
+        string path = Path.GetDirectoryName(name);
+        name = Path.GetFileNameWithoutExtension(name);
+        T res = Resources.Load<T>(name);
+        if(res == null){
+            res = AssetBundleLoader.Load<T>(path, name);
+        }
+        return res;
+    }
+    public static T Load<T>(string path, string name)where T : UnityEngine.Object{
+        return Load<T>(Path.Combine(path, name));
+    }
+    /// <summary>
     /// 加载实体，依赖于Unity的AB包功能，自动缓存已经记载过的AB包。传入资源路径名和资源名。
     /// </summary>
     /// <param name="name"></param>
@@ -32,35 +51,30 @@ public class AssetManager : MonoBehaviour
     /// <returns></returns>
     public static GameObject LoadEntity(string name, bool signal = true){
         name = Tool.ToPath(name);
-        string path = Path.GetDirectoryName(name);
-        name = Path.GetFileNameWithoutExtension(name);
-        GameObject pb = Resources.Load<GameObject>(Path.Combine("Entities", name));
-        if(pb == null){
-            string p = signal ?
-                Path.Combine("Entities", path, name.ToLower() + "_gameobject")
-                : Path.Combine("Entities", path);
-            pb = AssetBundleLoader.LoadPrefab(p, name);
+        name = Path.Combine("Entities", name);
+        if(signal){
+            name = Path.Combine(Path.GetDirectoryName(name), Path.GetFileNameWithoutExtension(name).ToLower() + "_gameobject");
         }
-        return pb;
+        return Load<GameObject>(name);
     }
     /// <summary>
-    /// Game类是资源预加载
+    /// Game类资源预加载
     /// </summary>
     /// <param name="path"></param>
     /// <param name="complate"></param>
     /// <returns></returns>
-    public static Container<AssetBundleRequest> PreloadGameAsset(string path, UnityAction<AssetBundleRequest> complate = null){
+    public static Container<AssetBundle> PreloadGameAsset(string path, UnityAction<AssetBundle> complate = null){
         path = Tool.ToPath(path);
         Debug.Log($"AssetManager读取路径{path}");
         if(!Directory.Exists(path)){
             Debug.LogWarning("预加载资源失败，路径不存在：" + path);
-            return Container<AssetBundleRequest>.Done;
+            return Container<AssetBundle>.Done;
         }
         try{
-            return AssetBundleLoader.LoadAllAsync(path, abq=>{complate?.Invoke(abq);});
+            return AssetBundleLoader.LoadAllAsync(path, ab=>{complate?.Invoke(ab);});
         }catch(Exception e){
             Debug.LogWarning("预加载资源失败：" + e.Message);
-            return Container<AssetBundleRequest>.Done;
+            return Container<AssetBundle>.Done;
         }
         
     }
@@ -70,8 +84,16 @@ public class AssetManager : MonoBehaviour
     /// <param name="path"></param>
     /// <param name="complate"></param>
     /// <returns></returns>
-    public static Container<AssetBundleRequest> PreloadEntity(string path, UnityAction<AssetBundleRequest> complate = null){
+    public static Container<AssetBundle> PreloadEntity(string path, UnityAction<AssetBundle> complate = null){
         return PreloadGameAsset(Path.Combine("Entities", path), complate);
     }
-    
+    /// <summary>
+    /// Game类房间预加载
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="complate"></param>
+    /// <returns></returns>
+    public static Container<AssetBundle> PreloadRoom(string path, UnityAction<AssetBundle> complate = null){
+        return PreloadGameAsset(Path.Combine("Rooms", path), complate);
+    }
 }
