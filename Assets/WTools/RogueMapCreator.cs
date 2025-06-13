@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 public enum MapFlag{
     /// <summary>
@@ -82,6 +83,7 @@ public class RogueMapCreator
     /// 每个点对于起始房间的距离
     /// </summary>
     public Dictionary<Point, int> distance;
+    public int roomNum = 0;
 
     public RogueMapCreator(int height, int width, float size = DEFAULT_SIZE, float dispersion = DEFAULT_DISPERSION, int seed = 0){
         this.width = width;
@@ -90,8 +92,6 @@ public class RogueMapCreator
         if(this.size < 0)this.size = 0;
         if(this.size > 1)this.size = 1;
         this.dispersion = dispersion;
-        map = new MapFlag[height, width];
-        prob = new float[height, width];
         SetSeed(seed);
     }
     public int SetSeed(int seed){
@@ -105,7 +105,11 @@ public class RogueMapCreator
         return rand.NextDouble() < p;
     }
     public void Init(){
+        map = new MapFlag[height, width];
+        prob = new float[height, width];
         start = new Point(height / 2, width / 2);
+        distance = new Dictionary<Point, int>();
+        roomNum = 0;
         MapSet(start, MapFlag.Start);
         bounds.lw = start.y;
         bounds.rw = width - 1 - start.y;
@@ -178,7 +182,6 @@ public class RogueMapCreator
             new Point(0, -1),
             new Point(-1, 0)
         };
-        distance = new Dictionary<Point, int>();
         distance[start] = 0;
         while(stack.Count > 0){
             Point p = stack.Pop();
@@ -187,6 +190,7 @@ public class RogueMapCreator
                 if(Limit(q) && MapGet(q) == MapFlag.Temp){
                     MapSet(q, MapFlag.Normal);
                     distance.Add(q, distance[p] + 1);
+                    roomNum ++;
                     stack.Push(q);
                 }
             }

@@ -37,7 +37,7 @@ public class GameTest : GameBase
                 Debug.Log(roomABContainer);
                 GenerateMap();
                 map.MapInit(5, 10);
-                map.MapCreratorInit();
+                map.MapCreatorInitByCheck();
                 map.Generate();
                 map.RoomLink();
                 Trans(map.rooms[map.mapCreator.start.x, map.mapCreator.start.y]);

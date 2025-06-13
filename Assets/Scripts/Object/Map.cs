@@ -24,6 +24,7 @@ public struct MapRoomList{
 }
 public class Map : MonoBehaviour
 {   
+    public const float SIZE_FACTOR = 0.6f;
     public static Map instance;
     private static GameObject _mapPrefab;
     public static GameObject mapPrefab => _mapPrefab ? _mapPrefab : _mapPrefab = AssetManager.Load<GameObject>("Map");
@@ -65,7 +66,7 @@ public class Map : MonoBehaviour
         this.size = size;
         this.seed = seed;
     }
-    public void MapCreratorInit(){
+    public void MapCreatorInit(){
         if(seed == -1){
             // 随机种子
             seed = Guid.NewGuid().GetHashCode();
@@ -78,9 +79,47 @@ public class Map : MonoBehaviour
         mapCreator.SetSeed(seed);
         rand = new System.Random(seed);
         mapCreator.Init();
-        Debug.Log(mapCreator);
         state.Add(MapState.MapCreatorDone);
         rooms = new Room[height, width];
+    }
+    /// <summary>
+    /// 带检查的地图初始化
+    /// </summary>
+    public void MapCreatorInitByCheck(){
+        Debug.Log("Map>>尝试生成地图");
+        if(seed == -1){
+            seed = Guid.NewGuid().GetHashCode();
+        }
+        seed--;
+        int count = 0;
+        do{
+            seed++;
+            count++;
+            Debug.Log($"Map检查生成>>尝试{count}次");
+            if(count > 10){
+                break;
+            }
+            try{
+                MapCreatorInit();
+            }catch(Exception e){
+                e.GetHashCode();
+                continue;
+            }
+        }while(!MapCreatorCheck());
+    }
+    /// <summary>
+    /// 地图合理性检查
+    /// </summary>
+    /// <returns></returns>
+    public bool MapCreatorCheck(){
+        int num = (int)(width * height * mapCreator.size * SIZE_FACTOR);
+        Debug.Log($"{num}, {mapCreator.roomNum}");
+        //检查房间数量在标准数量-5 5 范围内，并且边界房间数量大于等于三
+        if(mapCreator.roomNum > num - 5 &&  mapCreator.roomNum < num + 5
+            && mapCreator.ends.Count >= 3){
+                return true;
+            }
+        return false;
     }
     /// <summary>
     /// 生成房间并添加到map的房间池
@@ -121,6 +160,7 @@ public class Map : MonoBehaviour
         return CreateRoom(wpick, pos);
     }
     public void Generate(){
+        Debug.Log(mapCreator);
         Clear();
         for(int i = 0; i < height; i++){
             for(int j = 0; j < width; j++){
