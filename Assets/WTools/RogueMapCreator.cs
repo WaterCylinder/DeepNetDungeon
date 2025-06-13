@@ -83,15 +83,15 @@ public class RogueMapCreator
     /// </summary>
     public Dictionary<Point, int> distance;
 
-    public RogueMapCreator(int width, int height, float size = DEFAULT_SIZE, float dispersion = DEFAULT_DISPERSION, int seed = 0){
+    public RogueMapCreator(int height, int width, float size = DEFAULT_SIZE, float dispersion = DEFAULT_DISPERSION, int seed = 0){
         this.width = width;
         this.height = height;
         this.size = size;
         if(this.size < 0)this.size = 0;
         if(this.size > 1)this.size = 1;
         this.dispersion = dispersion;
-        map = new MapFlag[width, height];
-        prob = new float[width, height];
+        map = new MapFlag[height, width];
+        prob = new float[height, width];
         SetSeed(seed);
     }
     public int SetSeed(int seed){
@@ -100,12 +100,12 @@ public class RogueMapCreator
         return seed;
     }
     public bool RandCheck(float p){
-        if(p <= 0)return false;
+        if(p <= 0)return false; 
         if(p >= 1)return true;
         return rand.NextDouble() < p;
     }
     public void Init(){
-        start = new Point(width / 2, height / 2);
+        start = new Point(height / 2, width / 2);
         MapSet(start, MapFlag.Start);
         bounds.lw = start.y;
         bounds.rw = width - 1 - start.y;

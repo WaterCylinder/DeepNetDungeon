@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 1053893838
+CRC: 2613986265
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 37357015d8e5927cd77b1f79578df8b9
+    Hash: b9d3178e2153ee24fdb7d342249ee999
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 5c0ffd106fa85fe4d55ce28c0ca7354b
+    Hash: 2f9ef8d80891e2c368ae3937b546fa8c
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 37357015d8e5927cd77b1f79578df8b9
+    Hash: b9d3178e2153ee24fdb7d342249ee999
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -35,6 +35,8 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers:
+- AssemblyName: Script
+  ClassName: DoorInfo
 - AssemblyName: Script
   ClassName: RoomTag
 Assets:

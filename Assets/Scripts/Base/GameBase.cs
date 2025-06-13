@@ -102,15 +102,15 @@ public abstract class GameBase : Game
     /// </summary>
     /// <param name="room"></param>
     /// <param name="index"></param>
-    public void Trans(Room room, int index = 0){
+    public void Trans(Room room, Door door = null){
         if(room != null){
             this.room = room;
             Vector2 pos;
-            if(index >= 0){
-                pos = room.doors[index].transform.position;
-                room.doors[index].canTrans = false;
+            if(door == null){
+                pos = room.defaultPos;
             }else{
-                pos = (Vector2)room.transform.position + room.defaultPos;
+                pos = door.transform.position;
+                door.canTrans = false;
             }
             player.transform.position = pos;
         }

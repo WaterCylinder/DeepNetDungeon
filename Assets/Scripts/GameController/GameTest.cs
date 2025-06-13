@@ -36,9 +36,10 @@ public class GameTest : GameBase
                 //生成地图
                 Debug.Log(roomABContainer);
                 GenerateMap();
-                map.MapInit(10, 10);
+                map.MapInit(5, 10);
                 map.MapCreratorInit();
                 map.Generate();
+                map.RoomLink();
                 Next();
                 Goto(100);//暂时不考虑动画
                 break;

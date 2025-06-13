@@ -8,20 +8,17 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {   
+    public GameObject _doorPrefab;
+    public GameObject doorPrefab => _doorPrefab ? _doorPrefab : AssetManager.Load<GameObject>("Door");
     public Room room;
     public bool isClose = false;
     public bool canTrans = true;
     public int index = 0;
-    public int targetRoomIndex = -1;
-    public int targetDoorIndex = -1;
-    void Start(){
-        if(targetRoomIndex >= 0 && room.links[targetRoomIndex] == null){
-            targetRoomIndex = -1;
-        }
-    }
+    public Room targetRoom;
+    public Door targetDoor;
     void OnTriggerEnter2D(Collider2D other){
-        if(other.GetComponent<Player>() != null && canTrans && !isClose && targetRoomIndex != -1){
-            GameBase.now.Trans(room.links[targetRoomIndex], targetDoorIndex);
+        if(other.GetComponent<Player>() != null && canTrans && !isClose && targetRoom != null){
+            GameBase.now.Trans(targetRoom, targetDoor);
         }
     }
     void OnTriggerExit2D(Collider2D other){
