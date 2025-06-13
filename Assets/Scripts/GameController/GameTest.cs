@@ -40,6 +40,7 @@ public class GameTest : GameBase
                 map.MapCreratorInit();
                 map.Generate();
                 map.RoomLink();
+                Trans(map.rooms[map.mapCreator.start.x, map.mapCreator.start.y]);
                 Next();
                 Goto(100);//暂时不考虑动画
                 break;

@@ -27,7 +27,7 @@ public class Map : MonoBehaviour
     public static Map instance;
     private static GameObject _mapPrefab;
     public static GameObject mapPrefab => _mapPrefab ? _mapPrefab : _mapPrefab = AssetManager.Load<GameObject>("Map");
-    public static Vector2 defaultSize = new Vector2(10, 10);
+    public static Vector2 defaultSize = new Vector2(20, 20);
     //  枚举转int
     public static int FlagValue(MapFlag flag){
         return (int)flag;
@@ -127,7 +127,7 @@ public class Map : MonoBehaviour
                 MapFlag flag = map[i, j];
                 if(flag == MapFlag.Empty)continue;
                 Vector2 pos = new Vector2(j * defaultSize.x, -i * defaultSize.y);
-                pos = new Vector2(pos.x - width * defaultSize.x / 2, pos.y + height * defaultSize.y / 2);
+                pos = new Vector2(pos.x - width * (int)defaultSize.x / 2, pos.y + height * (int)defaultSize.y / 2);
                 //设置房间信息
                 Room room = CreateRoom(flag, pos);
                 Debug.Log($"创建房间: {room.name} 位置: {pos}");
@@ -152,6 +152,14 @@ public class Map : MonoBehaviour
                 Vector2Int tp = pos + t;
                 if(mapCreator.Limit(tp.x, tp.y) && map[tp.x, tp.y] != MapFlag.Empty){
                     room.LinkTo(rooms[tp.x, tp.y], t);
+                }
+            }
+            //清除未链接的门
+            //TODO 给门加上自清除功能
+            for(int i = 0; i< room.doors.Count; i++){
+                Door d = room.doors[i].door;
+                if(d.targetRoom == null){
+                    Destroy(d.gameObject);
                 }
             }
         }

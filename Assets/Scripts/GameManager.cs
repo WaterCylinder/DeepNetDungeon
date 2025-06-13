@@ -3,6 +3,14 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {   
+    # region 全局映射
+
+    public static Game G_game => instance.game;
+    public static Player G_player => instance.game.player;
+    public static Vector2 G_playerPos => G_player.transform.position;
+    public static GameManager G_ins => instance;
+
+    # endregion
     private static GameManager _instance;
     public static GameManager instance{
         get{
@@ -17,7 +25,6 @@ public class GameManager : MonoBehaviour
             return _instance;
         }
     }
-    public static GameManager ins => instance;
     /// <summary>
     /// 切换暂停游戏
     /// </summary>

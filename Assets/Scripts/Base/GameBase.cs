@@ -107,7 +107,7 @@ public abstract class GameBase : Game
             this.room = room;
             Vector2 pos;
             if(door == null){
-                pos = room.defaultPos;
+                pos = (Vector2)room.transform.position + room.defaultPos;
             }else{
                 pos = door.transform.position;
                 door.canTrans = false;

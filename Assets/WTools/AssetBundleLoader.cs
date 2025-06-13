@@ -1,11 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq.Expressions;
 using System.Xml;
 using UnityEngine;
 
 public class AssetBundleLoader
 {   
+    public static Dictionary<string, AssetBundle> loadedAssetBundle = new();
+    public static bool IsLoaded(string path){
+        return loadedAssetBundle.ContainsKey(path) && loadedAssetBundle[path] != null;
+    }
     public static string assetPath = AssetPath.assetPath;
     /// <summary>
     /// 普通加载资源包
@@ -13,7 +17,13 @@ public class AssetBundleLoader
     /// <param name="path"></param>
     /// <returns></returns>
     public static AssetBundle Load(string path){
-        return AssetBundle.LoadFromFile(path);
+        if(IsLoaded(path)){
+            return loadedAssetBundle[path];
+        }else{
+            AssetBundle ab = AssetBundle.LoadFromFile(path);
+            loadedAssetBundle.Add(path, ab);
+            return ab;
+        }
     }
     /// <summary>
     /// 异步加载资源包
@@ -31,7 +41,7 @@ public class AssetBundleLoader
     /// <param name="name"></param>
     /// <returns></returns>
     public static T Load<T>(string path, string name)where T : UnityEngine.Object{
-        return AssetBundle.LoadFromFile(Path.Combine(assetPath, path)).LoadAsset<T>(name);
+        return Load(Path.Combine(assetPath, path)).LoadAsset<T>(name);
     }
     /// <summary>
     /// 异步加载资源
@@ -42,12 +52,19 @@ public class AssetBundleLoader
     /// <param name="complate"></param>
     /// <returns></returns>
     public static Container<T> LoadAsync<T>(string path, string name, Action<T> complate = null)where T : UnityEngine.Object{
-        AssetBundleCreateRequest abq = LoadAsync(Path.Combine(assetPath, path));
         Container<T> c = new Container<T>();
-        abq.completed += ao => {
-            c.Set(abq.assetBundle.LoadAsset<T>(name));
+        if(IsLoaded(path)){
+            T asset = LoadFromAB<T>(loadedAssetBundle[path], name);
+            c.Set(asset);
             complate?.Invoke(c.Get());
-        };
+        }else{
+            AssetBundleCreateRequest abq = LoadAsync(Path.Combine(assetPath, path));
+            abq.completed += ao => {
+                c.Set(abq.assetBundle.LoadAsset<T>(name));
+                loadedAssetBundle.Add(path, abq.assetBundle);
+                complate?.Invoke(c.Get());
+            };
+        }
         return c;
     }
     /// <summary>
@@ -55,7 +72,7 @@ public class AssetBundleLoader
     /// </summary>
     /// <param name="path"></param>
     public static void LoadAll(string path){
-        AssetBundle.LoadFromFile(Path.Combine(assetPath, path)).LoadAllAssets();
+        Load(Path.Combine(assetPath, path)).LoadAllAssets();
     }
     /// <summary>
     /// 异步加载资源包中的所有资源
@@ -65,17 +82,23 @@ public class AssetBundleLoader
     public static Container<AssetBundle> LoadAllAsync(string path, Action<AssetBundle> complate = null){
         path = Path.Combine(assetPath, path);
         if(!File.Exists(path)){
-            throw new Exception("AB包不存在：" + path);
+            throw new Exception("AssetBundelLoader.LoadAllAsync: AB包不存在：" + path);
         }
-        AssetBundleCreateRequest abq = LoadAsync(Path.Combine(assetPath, path));
         Container<AssetBundle> container = new Container<AssetBundle>();
-        abq.completed += ao => {
-            AssetBundleRequest req = abq.assetBundle.LoadAllAssetsAsync();
-            req.completed += ao => {
-                container.Set(abq.assetBundle);
-                complate?.Invoke(abq.assetBundle);
+        if(IsLoaded(path)){
+            container.Set(loadedAssetBundle[path]);
+            complate?.Invoke(container.Get());
+        }else{
+            AssetBundleCreateRequest abq = LoadAsync(Path.Combine(assetPath, path));
+            abq.completed += ao => {
+                AssetBundleRequest req = abq.assetBundle.LoadAllAssetsAsync();
+                req.completed += ao => {
+                    container.Set(abq.assetBundle);
+                    loadedAssetBundle.Add(path, abq.assetBundle);
+                    complate?.Invoke(abq.assetBundle);
+                };
             };
-        };
+        }
         return container;
     }
     /// <summary>
@@ -111,13 +134,7 @@ public class AssetBundleLoader
     /// <param name="name"></param>
     /// <returns></returns>
     public static Container<GameObject> LoadPrefabAsync(string path, string name, Action<GameObject> complate = null){
-        AssetBundleCreateRequest abq = LoadAsync(Path.Combine(assetPath, path));
-        Container<GameObject> c = new Container<GameObject>();
-        abq.completed += ao => {
-            c.Set(abq.assetBundle.LoadAsset<GameObject>(name));
-            complate?.Invoke(c.Get());
-        };
-        return c;
+        return LoadAsync(path, name, complate);
     }
     /// <summary>
     /// 加载XML文件

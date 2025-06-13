@@ -14,7 +14,7 @@ public class MapDebuger : MonoBehaviour
     public float roomSize = 32;
     public bool isDisplay = false;
     void Update(){
-        map = GameManager.ins.game.map;
+        map = GameManager.instance.game.map;
         if(map != null && map.state.Check(MapState.MapCreatorDone) && !isDisplay){
             for(int i = 0; i < map.height; i++){
                 for(int j = 0; j < map.width; j++){
