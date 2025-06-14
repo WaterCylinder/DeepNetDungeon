@@ -28,7 +28,7 @@ public class Map : MonoBehaviour
     public static Map instance;
     private static GameObject _mapPrefab;
     public static GameObject mapPrefab => _mapPrefab ? _mapPrefab : _mapPrefab = AssetManager.Load<GameObject>("Map");
-    public static Vector2 defaultSize = new Vector2(20, 20);
+    public static Vector2 defaultSize = new Vector2(30, 50);
     //  枚举转int
     public static int FlagValue(MapFlag flag){
         return (int)flag;
@@ -114,8 +114,8 @@ public class Map : MonoBehaviour
     public bool MapCreatorCheck(){
         int num = (int)(width * height * mapCreator.size * SIZE_FACTOR);
         Debug.Log($"{num}, {mapCreator.roomNum}");
-        //检查房间数量在标准数量-5 5 范围内，并且边界房间数量大于等于三
-        if(mapCreator.roomNum > num - 5 &&  mapCreator.roomNum < num + 5
+        //检查房间数量在标准数量-3 3 范围内，并且边界房间数量大于等于三
+        if(mapCreator.roomNum > num - 3 &&  mapCreator.roomNum < num + 3
             && mapCreator.ends.Count >= 3){
                 return true;
             }
@@ -166,8 +166,8 @@ public class Map : MonoBehaviour
             for(int j = 0; j < width; j++){
                 MapFlag flag = map[i, j];
                 if(flag == MapFlag.Empty)continue;
-                Vector2 pos = new Vector2(j * defaultSize.x, -i * defaultSize.y);
-                pos = new Vector2(pos.x - width * (int)defaultSize.x / 2, pos.y + height * (int)defaultSize.y / 2);
+                Vector2 pos = new Vector2(j * defaultSize.y, -i * defaultSize.x);
+                pos = new Vector2(pos.x - width * (int)defaultSize.y / 2, pos.y + height * (int)defaultSize.x / 2);
                 //设置房间信息
                 Room room = CreateRoom(flag, pos);
                 Debug.Log($"创建房间: {room.name} 位置: {pos}");
