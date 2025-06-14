@@ -7,6 +7,10 @@ public class GameInsideMenu : MonoBehaviour
     public GameObject menu;
     public bool isOpen = false;
 
+    public void ReloadGame(){
+        Global.ChangeScene("Game");
+    }
+
     public void OpenMenu(){
         GameManager.Pause();
         Debug.Log("InsideUI: 打开菜单");

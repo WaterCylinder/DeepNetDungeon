@@ -352,4 +352,28 @@ public class Bullet : Entity
         }
     }
 
+    protected override void EntityCollisionEnter(Entity other){
+        try{
+            //是否穿过实体（非子弹实体）
+            if(other.GetComponent<Entity>() != null
+                && !bulletTags.Check(BulletTag.PenetrateEntity)
+                && other.GetComponent<Bullet>() == null){
+                Dead();
+            }
+        }catch(Exception e){
+            Debug.LogWarning(e.Message);
+        }
+    }
+
+    protected override void OtherCollisionEnter(GameObject other){
+        try{
+            //是否穿过障碍物
+            if(other.GetComponent<Block>() != null && !bulletTags.Check(BulletTag.PenetrateBlock)){
+                Dead();
+            }
+        }catch(Exception e){
+            Debug.LogWarning(e.Message);
+        }
+    }
+
 }

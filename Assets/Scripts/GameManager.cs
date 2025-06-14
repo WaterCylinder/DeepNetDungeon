@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
 {   
     # region 全局映射
 
-    public static Game G_game => instance.game;
+    public static GameBase G_game => instance.game;
     public static Player G_player => instance.game.player;
     public static Vector2 G_playerPos => G_player.transform.position;
     public static GameManager G_ins => instance;
@@ -82,11 +82,26 @@ public class GameManager : MonoBehaviour
         entityPool.Add(entity, true, false);
     }
 
+    /// <summary>
+    /// 创建实体并加入到对象池中
+    /// </summary>
+    /// <param name="prefab"></param>
+    /// <param name="postion"></param>
+    /// <returns></returns>
+    public Entity EntityCreate(GameObject prefab, Vector2 postion){
+        try{
+             Entity ent = Instantiate(prefab, postion, Quaternion.identity).GetComponent<Entity>();
+            EntityAdd(ent);
+            return ent;
+        }catch(System.Exception e){
+            Debug.LogError(e);
+            return null;
+        }
+    }
+
     public Entity EntityCreate(string name, Vector2 postion){
         GameObject obj = AssetManager.LoadEntity(name);
-        Entity ent = Instantiate(obj, postion, Quaternion.identity).GetComponent<Entity>();
-        EntityAdd(ent);
-        return ent;
+        return EntityCreate(obj, postion);
     }
 
     public void EntityDestroy(Entity entity){

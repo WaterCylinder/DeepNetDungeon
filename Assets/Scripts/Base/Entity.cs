@@ -11,7 +11,7 @@ public class EntityTag : Tag{
     public static uint Enemy;
     public static uint Bullet;
 }
-public class Entity : MonoBehaviour
+public abstract class Entity : MonoBehaviour
 {
     public EntityTag entityTags = new EntityTag();
     /// <summary>

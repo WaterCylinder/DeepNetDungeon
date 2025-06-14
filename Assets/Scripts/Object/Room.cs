@@ -22,6 +22,7 @@ public class Room : MonoBehaviour
     public Vector2 defaultPos;
     public List<Room> links = new();
     public List<DoorInfo> doors = new();
+    public List<Enemy> enemies = new();//敌人单位
     public Door GetDoor(Vector2Int toward){
         return doors.Find(x => x.toward == toward).door;
     }
@@ -40,5 +41,21 @@ public class Room : MonoBehaviour
         foreach(DoorInfo door in doors){
             door.door.isClose = false;
         }
+    }
+    /// <summary>
+    /// 创建敌人实体对象
+    /// </summary>
+    /// <param name="enemyName"></param>
+    /// <param name="pos"></param>
+    /// <returns></returns>
+    public Enemy CreatEnemy(string enemyName, Vector2 pos){
+        GameObject obj = GameManager.instance.game.GetEntity(enemyName);
+        if(obj == null)
+            obj = AssetManager.LoadEntity(enemyName);
+        Enemy enm = (Enemy)GameManager.instance.EntityCreate(obj, pos);
+        if(enm == null)return null;
+        enm.room = this;
+        enemies.Add(enm);
+        return enm;
     }
 }
