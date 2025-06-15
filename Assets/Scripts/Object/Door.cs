@@ -9,7 +9,7 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {   
     public GameObject _doorPrefab;
-    public GameObject doorPrefab => _doorPrefab ? _doorPrefab : AssetManager.Load<GameObject>("Door");
+    public GameObject doorPrefab => _doorPrefab ? _doorPrefab : _doorPrefab = AssetManager.Load<GameObject>("Door");
     public Room room;
     public bool isClose = false;
     public bool canTrans = true;

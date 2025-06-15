@@ -104,7 +104,9 @@ public abstract class GameBase : Game
     /// <param name="index"></param>
     public void Trans(Room room, Door door = null){
         if(room != null){
+            this.room?.ExitRoom();
             this.room = room;
+            this.room.EnterRoom();
             Vector2 pos;
             if(door == null){
                 pos = (Vector2)room.transform.position + room.defaultPos;

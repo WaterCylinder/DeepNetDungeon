@@ -40,6 +40,7 @@ public class GameTest : GameBase
                 map.MapCreatorInitByCheck();
                 map.Generate();
                 map.RoomLink();
+                //玩家送到初始房间
                 Trans(map.rooms[map.mapCreator.start.x, map.mapCreator.start.y]);
                 Next();
                 Goto(100);//暂时不考虑动画

@@ -133,8 +133,11 @@ public class Map : MonoBehaviour
         }
         GameObject obj = Instantiate(roomPrefab, pos, Quaternion.identity);
         obj.transform.SetParent(transform);
+        Room room = obj.GetComponent<Room>();
+        //初始化room
+        room.Init();
         roomNum ++;
-        return obj.GetComponent<Room>();
+        return room;
     }
     public Room CreateRoom(string roomName, Vector2 pos){
         GameBase game = GameManager.instance.game;

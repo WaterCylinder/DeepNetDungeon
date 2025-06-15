@@ -32,7 +32,6 @@ public class ItemManager : DataBase<Item>
             db.state = DataBaseState.Init;
             db._path = Path.Combine(DataBasePath, name);
             db.LoadALL();
-
             dataBase.Add(name, db);
         }
 

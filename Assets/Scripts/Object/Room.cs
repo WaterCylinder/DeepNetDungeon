@@ -5,7 +5,9 @@ using UnityEngine;
 
 [Serializable]
 public class RoomTag : Tag{
-    public static uint None = 0;
+    public static uint None = 0,
+    Enter,
+    IsClear;
 }
 [Serializable]
 public struct DoorInfo{
@@ -22,7 +24,20 @@ public class Room : MonoBehaviour
     public Vector2 defaultPos;
     public List<Room> links = new();
     public List<DoorInfo> doors = new();
+    public List<EnemyGenerator> enemyGenerators = new();//敌人生成器
+    public Transform enemyPool;
     public List<Enemy> enemies = new();//敌人单位
+    void Awake(){
+        enemyPool = enemyPool ? enemyPool : transform.Find("EnemyPool");
+    }
+    public void Init(){
+        enemyGenerators = new();
+        enemies = new();
+        foreach(Transform chi in enemyPool){
+            if(chi.GetComponent<EnemyGenerator>() != null)
+                enemyGenerators.Add(chi.GetComponent<EnemyGenerator>());
+        }
+    }
     public Door GetDoor(Vector2Int toward){
         return doors.Find(x => x.toward == toward).door;
     }
@@ -55,7 +70,35 @@ public class Room : MonoBehaviour
         Enemy enm = (Enemy)GameManager.instance.EntityCreate(obj, pos);
         if(enm == null)return null;
         enm.room = this;
+        enm.transform.SetParent(enemyPool);
         enemies.Add(enm);
         return enm;
+    }
+    public void GenarateEnemy(){
+        foreach(EnemyGenerator gen in enemyGenerators){
+            if(gen != null){
+                gen.Generate();
+            }
+        }
+    }
+    void Update(){
+        if(tags.Check(RoomTag.Enter) 
+            && !tags.Check(RoomTag.IsClear) 
+            && enemies.Count <= 0){
+            OpenDoor();
+            tags.Add(RoomTag.IsClear);
+        }
+    }
+    public void EnterRoom(){
+        tags.Add(RoomTag.Enter);
+        if(tags.Check(RoomTag.IsClear)){
+            OpenDoor();
+        }else{
+            CloseDoor();
+            GenarateEnemy();
+        }
+    }
+    public void ExitRoom(){
+
     }
 }
