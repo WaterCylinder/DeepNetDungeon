@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     public static Coroutine mainProcess;
     public SkipList<Entity> entityPool = new SkipList<Entity>();
     public GameBase game => (GameBase)Game.now;
+    public SkipList<DropItem> dropItemPool = new SkipList<DropItem>();
     public int opera = 0;
     /// <summary>
     /// 初始化游戏
@@ -90,7 +91,7 @@ public class GameManager : MonoBehaviour
     /// <returns></returns>
     public Entity EntityCreate(GameObject prefab, Vector2 postion){
         try{
-             Entity ent = Instantiate(prefab, postion, Quaternion.identity).GetComponent<Entity>();
+            Entity ent = Instantiate(prefab, postion, Quaternion.identity).GetComponent<Entity>();
             EntityAdd(ent);
             return ent;
         }catch(System.Exception e){
@@ -107,6 +108,24 @@ public class GameManager : MonoBehaviour
     public void EntityDestroy(Entity entity){
         entityPool.Remove(entity);
         Destroy(entity.gameObject);
+    }
+
+    public void ItemDrop(Item item, Vector2 pos){
+        try{
+            DropItem di = Instantiate(DropItem.prefab, pos, Quaternion.identity).GetComponent<DropItem>();
+            di.item = item;
+            di.Init();
+            dropItemPool.Add(di, true, false);
+        }catch(System.Exception e){
+            Debug.LogWarning(e);
+        }
+    }
+    public void ItemRemove(DropItem dropItem){
+        try{
+            dropItemPool.Remove(dropItem);
+        }catch(System.Exception e){
+            Debug.LogWarning(e);
+        }
     }
 
     void DebugTest(){

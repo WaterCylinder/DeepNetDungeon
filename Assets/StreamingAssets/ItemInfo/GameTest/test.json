@@ -1,0 +1,13 @@
+{
+    "list": [
+        {   
+            "itemName": "testitem",
+            "itemInfo": "测试物品，无效果",
+            "spriteUrl": "GameTest:testitem",
+            "tags": "None",
+            "OnPick": "Event:Log(>>>>测试Item控制台输出:Pick<<<<)",
+            "OnUse": "Event:Log(>>>>测试Item控制台输出:Use<<<<)",
+            "OnDrop": "Event:Log(>>>>测试Item控制台输出:Drop<<<<)"
+        }
+    ]
+}

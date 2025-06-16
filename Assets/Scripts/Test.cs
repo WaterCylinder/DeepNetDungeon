@@ -47,6 +47,12 @@ public class Test : MonoBehaviour
             }
         }*/
     }
+    public void TestCreatDropItem(){
+        GameManager.instance.ItemDrop(
+            ItemManager.GetItem(GameManager.G_game.gameName, "testitem"), 
+            GameManager.G_playerPos + new Vector2(0.5f, 0.5f)
+            );
+    }
     void HotUpdateTest(){
         // Editor环境下，HotUpdate.dll.bytes已经被自动加载，不需要加载，重复加载反而会出问题。
         # if !UNITY_EDITOR

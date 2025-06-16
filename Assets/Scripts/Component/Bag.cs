@@ -73,4 +73,5 @@ public class Bag : MonoBehaviour
         // 默认调用全局查找
         return ItemManager.GetItemInAllDB(itemIdentifier);
     }
+
 }

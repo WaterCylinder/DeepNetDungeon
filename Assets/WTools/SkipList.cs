@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 public class SkipList<T> : IEnumerable<T>, IEnumerable
 {
@@ -132,6 +133,16 @@ public class SkipList<T> : IEnumerable<T>, IEnumerable
     {
         return GetEnumerator();
     }
+
+    public override string ToString(){
+        StringBuilder s = new StringBuilder();
+        s.AppendLine($"SkipList:Type:{typeof(T)}, Count:{count}");
+        int n = 0;
+        ForEach(node => {
+            s.AppendLine($"{n}: {node.value}");
+        });
+        return s.ToString();
+    }
 }
 public class SkipList<T1, T2> : SkipList<KeyValuePair<T1, T2>>{
     public Node FindNode(T1 key, T2 value = default){
@@ -152,5 +163,15 @@ public class SkipList<T1, T2> : SkipList<KeyValuePair<T1, T2>>{
     public KeyValuePair<T1, T2> Find(T1 key){
         Node node = FindNode(key);
         return node != null ? node.value : default;
+    }
+
+    public override string ToString(){
+        StringBuilder s = new StringBuilder();
+        s.AppendLine($"SkipList:Type:{typeof(T1).Name}.{typeof(T2).Name}, Count:{count}");
+        int n = 0;
+        ForEach(node => {
+            s.AppendLine($"{n}: {node.value}");
+        });
+        return s.ToString();
     }
 }

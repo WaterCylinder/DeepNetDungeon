@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 3293824264
+CRC: 3771133781
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: test
+      Name: gametest
       Dependencies: {}

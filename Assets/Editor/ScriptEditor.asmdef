@@ -1,0 +1,18 @@
+{
+    "name": "ScriptEditor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9c9a4f3256a43cb4291ed3ed86ed4b95",
+        "GUID:343deaaf83e0cee4ca978e7df0b80d21",
+        "GUID:a93bef502f91913439bfa61edce480cf"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -85,6 +85,7 @@ public abstract class GameBase : Game
     public GameObject GetAsset(string name) => GetAsset<GameObject>(assetABContainer.Get(), name);
 
     protected void GenerateMap(){
+        if(map != null)return;
         GameObject obj = Instantiate(Map.mapPrefab, transform.position, Quaternion.identity);
         map = obj.GetComponent<Map>();
     }

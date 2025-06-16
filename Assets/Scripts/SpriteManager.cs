@@ -55,6 +55,7 @@ public class SpriteManager : DataBase<SpriteAsset>
         if (parts.Length != 2){
             return GetSpriteInAllDB(spriteinfo);
         }
+        Debug.Log($"使用{spriteinfo}读取sprite:{parts[0]}下的{parts[1]}");
         return GetSprite(parts[0], parts[1]);
     }
     public static Sprite GetSpriteInAllDB(string spritename){
