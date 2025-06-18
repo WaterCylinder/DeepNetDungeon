@@ -109,7 +109,11 @@ public class GameManager : MonoBehaviour
         entityPool.Remove(entity);
         Destroy(entity.gameObject);
     }
-
+    /// <summary>
+    /// 创建掉落物
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="pos"></param>
     public void ItemDrop(Item item, Vector2 pos){
         try{
             DropItem di = Instantiate(DropItem.prefab, pos, Quaternion.identity).GetComponent<DropItem>();
@@ -119,6 +123,10 @@ public class GameManager : MonoBehaviour
         }catch(System.Exception e){
             Debug.LogWarning(e);
         }
+    }
+    public void ItemDrop(string dbname, string itemName, Vector2 pos){
+        Item item = ItemManager.GetItem(dbname, itemName);
+        ItemDrop(item, pos);
     }
     public void ItemRemove(DropItem dropItem){
         try{
